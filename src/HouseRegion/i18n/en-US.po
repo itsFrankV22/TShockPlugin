@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tshock-chinese-plugin\n"
-"POT-Creation-Date: 2025-01-22 17:42:39+0000\n"
-"PO-Revision-Date: 2025-01-23 01:07\n"
+"POT-Creation-Date: 2025-02-27 12:32:54+0000\n"
+"PO-Revision-Date: 2025-03-19 01:13\n"
 "Last-Translator: \n"
 "Language-Team: English\n"
 "MIME-Version: 1.0\n"
@@ -192,6 +192,7 @@ msgid "你选择的区域与Tshock区域 {0} 重叠，这是不允许的。"
 msgstr "The area you selected overlaps with Tshock region {0}, which is not allowed."
 
 #: ../../Plugin.cs:215
+#: ../../Plugin.cs:563
 msgid "你选择的区域与其他房子存在重叠，这是不允许的。"
 msgstr "The area you selected overlaps with other houses, which is not allowed."
 
@@ -238,8 +239,8 @@ msgstr "Because your house is less than the minimum limit of {0} blocks."
 msgid "因为您的房屋高度小于最小限制 {0} 格块。"
 msgstr "Because your house height is less than the minimum limit of {0} blocks."
 
-#: ../../PacketReceive.cs:216
 #: ../../Plugin.cs:652
+#: ../../PacketReceive.cs:216
 msgid "已上锁"
 msgstr "Locked"
 
@@ -281,6 +282,10 @@ msgstr "House {0} already exists!"
 #, csharp-format
 msgid "房子: {0} {1}"
 msgstr "House: {0} {1}"
+
+#: ../../Plugin.cs:797
+msgid "房子插件提示处理超时,已抛弃部分提示!"
+msgstr "Reminder processing timed out, discarded some tips!"
 
 #: ../../Plugin.cs:650
 #, csharp-format
@@ -328,10 +333,10 @@ msgstr "House plugin error, database write error:"
 msgid "房屋插件错误调用事件时出错:"
 msgstr "House plugin error, an error occurred while calling the event:"
 
-#: ../../PacketReceive.cs:215
 #: ../../Plugin.cs:637
 #: ../../Plugin.cs:642
 #: ../../Plugin.cs:648
+#: ../../PacketReceive.cs:215
 #: ../../Utils.cs:90
 msgid "房屋插件错误超标错误:"
 msgstr "House plugin error, exceeds standard error:"
@@ -439,8 +444,8 @@ msgstr "Unable to use because server prohibits owner from modifying users."
 msgid "无法使用，因为服务器禁止了所有者分享使用者功能。"
 msgstr "Unable to use because server prohibits owner sharing user function."
 
-#: ../../PacketReceive.cs:216
 #: ../../Plugin.cs:652
+#: ../../PacketReceive.cs:216
 msgid "未上锁"
 msgstr "Unlocked"
 

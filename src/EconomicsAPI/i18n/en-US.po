@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tshock-chinese-plugin\n"
-"POT-Creation-Date: 2025-01-08 13:15:55+0000\n"
-"PO-Revision-Date: 2025-01-10 01:11\n"
+"POT-Creation-Date: 2025-02-02 04:38:47+0000\n"
+"PO-Revision-Date: 2025-02-04 01:07\n"
 "Last-Translator: \n"
 "Language-Team: English\n"
 "MIME-Version: 1.0\n"
@@ -49,6 +49,11 @@ msgstr "/bank reset"
 #: ../../Command.cs:72
 msgid "bank 指令"
 msgstr "bank command"
+
+#: ../../Extensions/TSPlayerExt.cs:30
+#, csharp-format
+msgid "EconomicAPI 执行命令报错:{0}"
+msgstr "EconomicAPI Execute the command to report an error: {0}"
 
 #: ../../Command.cs:89
 msgid "Economics 已重置"

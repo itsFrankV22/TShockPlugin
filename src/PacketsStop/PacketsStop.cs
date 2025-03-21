@@ -9,7 +9,8 @@ namespace PacketsStop;
 public class PacketsStop : TerrariaPlugin
 {
 
-    public override string Name => System.Reflection.Assembly.GetExecutingAssembly().GetName().Name!; public override Version Version => new Version(1, 0, 3);
+    public override string Name => System.Reflection.Assembly.GetExecutingAssembly().GetName().Name!;
+    public override Version Version => new Version(1, 0, 5);
     public override string Author => "羽学 感谢少司命";
     public override string Description => GetString("拦截没有指定权限的用户组数据包");
 
@@ -31,7 +32,7 @@ public class PacketsStop : TerrariaPlugin
         LoadConfig();
         this.Packets = this.GetPackets();
         ServerApi.Hooks.NetGetData.Register(this, this.OnGetData, int.MaxValue);
-        Commands.ChatCommands.Add(new Command("拦截", this.Command, "拦截"));
+        Commands.ChatCommands.Add(new Command("packetstop.use", this.Command, "拦截", "packetstop"));
         GeneralHooks.ReloadEvent += LoadConfig;
     }
 
@@ -61,7 +62,7 @@ public class PacketsStop : TerrariaPlugin
 
         if (args != null && args.Player != null)
         {
-            args.Player.SendSuccessMessage("[数据包拦截]重新加载配置完毕。");
+            args.Player.SendSuccessMessage(GetString("[数据包拦截]重新加载配置完毕。"));
         }
     }
     #endregion
@@ -71,21 +72,16 @@ public class PacketsStop : TerrariaPlugin
 
     private void Command(CommandArgs args)
     {
-        if (!args.Player.HasPermission("拦截"))
-        {
-            args.Player.SendErrorMessage("你没有使用数据包拦截的权限");
-            return;
-        }
-        else
-        {
-            this._Enabled = !this._Enabled;
-            TSPlayer.All.SendInfoMessage($"[数据包拦截]已{(this._Enabled ? "启用" : "禁用")}");
-        }
+
+        this._Enabled = !this._Enabled;
+        TSPlayer.All.SendInfoMessage(this._Enabled
+            ? GetString("[数据包拦截]已启用")
+            : GetString("[数据包拦截]已禁用"));
 
 
         if (args.Parameters.Count != 2)
         {
-            args.Player.SendInfoMessage("/拦截 add 玩家名 - 将玩家添加到LJ组(不存在自动创建)。\n/拦截 del 玩家名 - 将玩家从LJ组移除并设为default组。");
+            args.Player.SendInfoMessage(GetString("/拦截 add 玩家名 - 将玩家添加到LJ组(不存在自动创建)。\n/拦截 del 玩家名 - 将玩家从LJ组移除并设为default组。"));
             return;
         }
 
@@ -95,7 +91,7 @@ public class PacketsStop : TerrariaPlugin
 
         if (Account == null)
         {
-            args.Player.SendInfoMessage($"无法找到名为'{Name}'的在线玩家。");
+            args.Player.SendInfoMessage(GetString($"无法找到名为'{Name}'的在线玩家。"));
             return;
         }
 
@@ -105,32 +101,32 @@ public class PacketsStop : TerrariaPlugin
                 if (!TShock.Groups.GroupExists("LJ"))
                 {
                     TShock.Groups.AddGroup("LJ", "", "tshock.canchat,tshock,tshock.partychat,tshock.sendemoji", "045,235,203");
-                    args.Player.SendSuccessMessage("LJ组已创建。");
+                    args.Player.SendSuccessMessage(GetString("LJ组已创建。"));
                 }
 
                 try
                 {
                     TShock.UserAccounts.SetUserGroup(Account, "LJ");
-                    args.Player.SendSuccessMessage($"{Name}已被设为LJ组成员。");
+                    args.Player.SendSuccessMessage(GetString($"{Name}已被设为LJ组成员。"));
                 }
                 catch (Exception ex)
                 {
-                    args.Player.SendErrorMessage($"无法将{Name}设为LJ组成员。错误信息: \n{ex.Message}");
+                    args.Player.SendErrorMessage(GetString($"无法将{Name}设为LJ组成员。错误信息: \n{ex.Message}"));
                 }
                 break;
             case "del":
                 try
                 {
                     TShock.UserAccounts.SetUserGroup(Account, "default");
-                    args.Player.SendSuccessMessage($"{Name}已从LJ组移除，并被设为default组。");
+                    args.Player.SendSuccessMessage(GetString($"{Name}已从LJ组移除，并被设为default组。"));
                 }
                 catch (Exception ex)
                 {
-                    args.Player.SendErrorMessage($"无法将{Name}从LJ组移除或设为default组。错误信息: \n{ex.Message}");
+                    args.Player.SendErrorMessage(GetString($"无法将{Name}从LJ组移除或设为default组。错误信息: \n{ex.Message}"));
                 }
                 break;
             default:
-                args.Player.SendInfoMessage("无效的子命令。使用 'add' 或 'del'。");
+                args.Player.SendInfoMessage(GetString("无效的子命令。使用 'add' 或 'del'。"));
                 break;
         }
     }
@@ -146,7 +142,7 @@ public class PacketsStop : TerrariaPlugin
             return;
         }
 
-        if (!player.HasPermission("免拦截"))
+        if (!player.HasPermission("packetstop.notstop"))
         {
 
             this.HandlePacket(player, args.MsgID);
@@ -164,7 +160,7 @@ public class PacketsStop : TerrariaPlugin
             }
             else
             {
-                TShock.Log.Error($"无法识别的数据包类型名称: {packetName}");
+                TShock.Log.Error(GetString($"无法识别的数据包类型名称: {packetName}"));
             }
         }
         return Packets;
